@@ -1,6 +1,3 @@
-
-
-# Import Libraries 
 from flask import jsonify
 from modules.exception import StocksCaculateError
 from app import app
@@ -29,8 +26,8 @@ def handle_stock_error(e):
     response = {
         'success': success,
         'error': {
-            'type': 'UnexpectedException',
-            'message': 'An unexpected error has occurred.'
+            'type': 'NegativeStockException',
+            'message': 'The stock is insufficient'
         }
     }
 

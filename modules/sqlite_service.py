@@ -27,41 +27,35 @@ class Database_Service:
         stocks_text = json.dumps(machine.stocks)
         cursorObj.execute("INSERT INTO machines (name, location, stock) VALUES('%s', '%s', '%s')" %(machine.name, machine.location, stocks_text))
         self.con.commit()
+        return cursorObj.lastrowid
 
-    def get_all(self):
+    def get_all_machines(self):
         cursorObj = self.con.cursor()
         cursorObj.execute("SELECT * FROM machines")
         rows = cursorObj.fetchall()
-        return [dict(row) for row in rows]
-
+        to_return = [dict(row) for row in rows]
+        for machine in to_return:
+            machine['stock'] = json.loads(machine['stock'])
+        return to_return
+    
+    def update_stock(self, machine_id, new_stock):
+        cursorObj = self.con.cursor()
+        stocks_text = json.dumps(new_stock)
+        cursorObj.execute("UPDATE machines SET stock = ? WHERE id = ?", (stocks_text, machine_id))
+        self.con.commit()
+    
+    def delete_machine(self, machine_id):
+        cursorObj = self.con.cursor()
+        cursorObj.execute("DELETE FROM machines WHERE id = ?", (machine_id))
+        self.con.commit()
+    
     def get_by_id(self, machine_id):
         cursorObj = self.con.cursor()
-        cursorObj.execute("SELECT * FROM machines where id = ?", (machine_id))
+        cursorObj.execute("SELECT * FROM machines where id = ?", (machine_id,))
         r = cursorObj.fetchone()
-        print(r)
-        print(type(r))
-        return dict(r)
+        to_return = dict(r)
+        to_return['stock'] = json.loads(to_return['stock'])
+        return to_return
 
-    def print_by_row(self, rows):
-        for row in rows:
-            print("ID: ", row[0])
-            print("name: ", row[1])
-            print("location: ", row[2])
-            to_dump = json.loads(row[3])
-            print("stocks: ", to_dump)
-            print("type of stocks:", type(to_dump))
-            print("\n")
-    
-    def test_insert(self):
-        cursorObj = self.con.cursor()
-        cursorObj.execute("INSERT INTO machines VALUES(1,'Marc', 'in front of MUIC', '[yoyo, dodo]')")
-        self.con.commit()
-        
-# a = Machine("2", "Tynu", "V condo", {"a": 1, "b": 2})
-# con = sql_connection()
-# init_table(con)
-# insert_into_machine(con, a)
-# # insert_into_machine(con, a.name, a.location, a.stocks)
-# # insert_into_machine(con, "Soyjuhaha", "behind the MUIC", [0,1,2,3])
-# test_fetch(con)
+db = Database_Service()
 
