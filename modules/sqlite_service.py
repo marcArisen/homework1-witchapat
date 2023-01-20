@@ -25,7 +25,8 @@ class Database_Service:
     def insert_into_machine(self, machine):
         cursorObj = self.con.cursor()
         stocks_text = json.dumps(machine.stocks)
-        cursorObj.execute("INSERT INTO machines (name, location, stock) VALUES('%s', '%s', '%s')" %(machine.name, machine.location, stocks_text))
+        # cursorObj.execute("INSERT INTO machines (name, location, stock) VALUES('%s', '%s', '%s')" %(machine.name, machine.location, stocks_text))
+        cursorObj.execute("INSERT INTO machines (name, location, stock) VALUES(?, ?, ?)", (machine.name, machine.location, stocks_text))
         self.con.commit()
         return cursorObj.lastrowid
 
