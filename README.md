@@ -34,7 +34,7 @@ for add product and buy product from the stock api, the request needs a body lik
     "Coin": 10
 }
 ```
-````
+
 
 ``url/machines/:id`` Delete Method: to delete a machine by its ID
 
