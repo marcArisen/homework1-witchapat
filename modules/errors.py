@@ -2,9 +2,11 @@ from flask import jsonify
 from modules.exception import StocksCaculateError
 from app import app
 
+
 @app.errorhandler(400)
 def handle_error_400(e):
     return "400, bad request.", 400
+
 
 @app.errorhandler(404)
 def handle_error_404(e):
@@ -15,9 +17,11 @@ def handle_error_404(e):
 def handle_error_405(e):
     return "405, HTTP method not allowed.", 405
 
+
 @app.errorhandler(408)
 def handle_error_408(e):
     return "408, your request is taking too long to be served.}", 408
+
 
 @app.errorhandler(StocksCaculateError)
 def handle_stock_error(e):
