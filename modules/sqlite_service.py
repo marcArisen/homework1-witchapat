@@ -4,7 +4,7 @@ from sqlite3 import Error
 
 from modules.machine import Machine
 
-class Database_Service:
+class DatabaseService:
     def __init__(self):
         self.con = self.sql_connection()
         self.con.row_factory = sqlite3.Row
@@ -58,5 +58,5 @@ class Database_Service:
         to_return['stock'] = json.loads(to_return['stock'])
         return to_return
 
-db = Database_Service()
+db = DatabaseService()
 
