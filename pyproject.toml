@@ -8,6 +8,7 @@ authors = ["marcArisen <markjingnum9@gmail.com>"]
 python = "^3.9"
 Flask = "^2.2.2"
 lorem = "^0.1.1"
+pre-commit = "^3.0.2"
 
 [tool.poetry.dev-dependencies]
 
