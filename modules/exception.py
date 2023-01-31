@@ -1,3 +1,2 @@
 class StocksCaculateError(Exception):
-    '''Stocks Calulate error.'''
-    
+    """Stocks Calulate error."""

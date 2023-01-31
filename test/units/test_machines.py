@@ -1,8 +1,9 @@
 import os
 import unittest
-import requests
-import lorem
 from random import randrange
+
+import lorem
+import requests
 
 
 class TestMachines(unittest.TestCase):
@@ -13,11 +14,7 @@ class TestMachines(unittest.TestCase):
         mock_name = lorem.sentence()
         mock_location = lorem.sentence()
         response = requests.post(
-            url=self.machine_api,
-            json={
-                "name": mock_name,
-                "location": mock_location
-            }
+            url=self.machine_api, json={"name": mock_name, "location": mock_location}
         )
         response_json = response.json()
         assert response.status_code == 200
@@ -54,9 +51,7 @@ class TestMachines(unittest.TestCase):
         random_item_amount = randrange(10)
         response = requests.put(
             url=f"{self.machine_api}/{random_machine_id}",
-            json={
-                item_name: random_item_amount
-            }
+            json={item_name: random_item_amount},
         )
         response_json = response.json()
         assert item_name in response_json["stock"]

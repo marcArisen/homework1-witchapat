@@ -1,6 +1,7 @@
 from flask import jsonify
-from modules.exception import StocksCaculateError
+
 from app import app
+from modules.exception import StocksCaculateError
 
 
 @app.errorhandler(400)
@@ -28,11 +29,11 @@ def handle_stock_error(e):
     status_code = 500
     success = False
     response = {
-        'success': success,
-        'error': {
-            'type': 'NegativeStockException',
-            'message': 'The stock is insufficient'
-        }
+        "success": success,
+        "error": {
+            "type": "NegativeStockException",
+            "message": "The stock is insufficient",
+        },
     }
 
     return jsonify(response), status_code
