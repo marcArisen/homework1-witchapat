@@ -20,6 +20,17 @@ tests = ["attrs[tests-no-zope]", "zope.interface"]
 tests-no-zope = ["cloudpickle", "cloudpickle", "hypothesis", "hypothesis", "mypy (>=0.971,<0.990)", "mypy (>=0.971,<0.990)", "pympler", "pympler", "pytest (>=4.3.0)", "pytest (>=4.3.0)", "pytest-mypy-plugins", "pytest-mypy-plugins", "pytest-xdist[psutil]", "pytest-xdist[psutil]"]
 
 [[package]]
+name = "caipyrinha"
+version = "0.2.2"
+description = "Abstraction layer over argparse."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "caipyrinha-0.2.2.tar.gz", hash = "sha256:ad311aea0f953719882ca42a86aa65d37ddbd6418daa21188435837fef079e04"},
+]
+
+[[package]]
 name = "certifi"
 version = "2022.12.7"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -492,6 +503,20 @@ files = [
 ]
 
 [[package]]
+name = "my-project"
+version = "0.2dev"
+description = "Esta es la descripcion breve"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "my_project-0.2dev.tar.gz", hash = "sha256:e529f94b6551228f63390dcbd29fdace912ed555fb7a9dc33f843f5407ecf1c7"},
+]
+
+[package.dependencies]
+caipyrinha = "*"
+
+[[package]]
 name = "nodeenv"
 version = "1.7.0"
 description = "Node.js virtual environment builder"
@@ -812,4 +837,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "b4ef1c23699b8b38ffe4bf5221e405b6141a34ad919a2b3c764a598324c99e04"
+content-hash = "ee9dcd97045823254620d1b811c5b1a50baaaf076cb993d820c6be66b9b3773d"

@@ -1,33 +1,32 @@
-from flask import Flask, jsonify, request
+from flask import jsonify, request
 
-from app import app
-# import modules
-from modules.exception import StocksCaculateError
-from modules.machine import Machine
-from modules.sqlite_service import *
+from modules.machine import machine_blueprint
+from modules.machine.exception import StocksCaculateError
+from modules.database.sqlite_service import *
+from modules.machine.machine import Machine
 
 
-@app.route("/machines", methods=["POST"])
+@machine_blueprint.route("/machines", methods=["POST"])
 def create_machine():
     req = request.json
     machine = Machine(name=req["name"], location=req["location"])
     inserted_id = db.insert_into_machine(machine)
-    return jsonify(db.get_by_id(str(inserted_id)))
+    return jsonify(db.get_machine_by_id(str(inserted_id)))
 
 
-@app.route("/machines", methods=["GET"])
+@machine_blueprint.route("/machines", methods=["GET"])
 def get_all_machine():
     return jsonify(db.get_all_machines())
 
 
-@app.route("/machines/<uuid>", methods=["GET"])
+@machine_blueprint.route("/machines/<uuid>", methods=["GET"])
 def get_machine_by_id(uuid):
-    return jsonify(db.get_by_id(uuid))
+    return jsonify(db.get_machine_by_id(uuid))
 
 
-@app.route("/machines/<uuid>", methods=["PUT"])
+@machine_blueprint.route("/machines/<uuid>", methods=["PUT"])
 def add_stock_by_json(uuid):
-    machine = db.get_by_id(uuid)
+    machine = db.get_machine_by_id(uuid)
     stock = machine["stock"]
     to_add = request.json
     to_update = {}
@@ -39,12 +38,12 @@ def add_stock_by_json(uuid):
             to_update[item] = to_add[item]
 
     db.update_stock(uuid, to_update)
-    return db.get_by_id(uuid)
+    return db.get_machine_by_id(uuid)
 
 
-@app.route("/machines/<uuid>", methods=["POST"])
+@machine_blueprint.route("/machines/<uuid>", methods=["POST"])
 def delete_stock_by_json(uuid):
-    machine = db.get_by_id(uuid)
+    machine = db.get_machine_by_id(uuid)
     stock = machine["stock"]
     to_remove = request.json
     to_update = {}
@@ -59,10 +58,10 @@ def delete_stock_by_json(uuid):
             raise StocksCaculateError
 
     db.update_stock(uuid, to_update)
-    return db.get_by_id(uuid)
+    return db.get_machine_by_id(uuid)
 
 
-@app.route("/machines/<uuid>", methods=["DELETE"])
-def delete_machine(uuid):
+@machine_blueprint.route("/machines/<uuid>", methods=["DELETE"])
+def delete_machine_by_id(uuid):
     db.delete_machine(uuid)
     return "id '%s' already deleted!" % uuid, 200
