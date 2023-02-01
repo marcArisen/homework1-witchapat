@@ -63,5 +63,5 @@ def delete_stock_by_json(uuid):
 
 @machine_blueprint.route("/machines/<uuid>", methods=["DELETE"])
 def delete_machine_by_id(uuid):
-    db.delete_machine(uuid)
+    db.delete_machine_by_id(uuid)
     return "machine removed......", 200

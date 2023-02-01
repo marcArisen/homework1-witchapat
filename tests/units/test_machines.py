@@ -68,8 +68,8 @@ class TestMachines(unittest.TestCase):
             assert update_stock_response.status_code == 200
             assert item_name in update_stock_response_json["stock"]
             assert (
-                update_stock_response_json["stock"][item_name]
-                == current_amount_stock + random_item_amount
+                    update_stock_response_json["stock"][item_name]
+                    == current_amount_stock + random_item_amount
             )
 
     def test_delete_stock(self):
@@ -101,9 +101,32 @@ class TestMachines(unittest.TestCase):
             assert remove_stock_response.status_code == 200
             assert item_name in remove_stock_response_json["stock"]
             assert (
-                remove_stock_response_json["stock"][item_name]
-                == current_amount_stock - random_item_amount
+                    remove_stock_response_json["stock"][item_name]
+                    == current_amount_stock - random_item_amount
             )
+
+    def test_remove_machine(self):
+        mock_name = lorem.sentence()
+        mock_location = lorem.sentence()
+        flask_app = create_app()
+        with flask_app.test_client() as test_client:
+            create_response = test_client.post(
+                "/machines", json={"name": mock_name, "location": mock_location}
+            )
+            assert create_response.status_code == 200
+            create_response_json = create_response.get_json()
+            created_machine_id = create_response_json["id"]
+            delete_response = test_client.delete(
+                f"/machines/{created_machine_id}"
+            )
+
+            assert delete_response.status_code == 200
+
+            response = test_client.get("/machines")
+            response_json = response.get_json()
+            for machine in response_json:
+                assert machine["id"] != created_machine_id
+
 
 
 if __name__ == "__main__":
