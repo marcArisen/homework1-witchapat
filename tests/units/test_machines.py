@@ -8,15 +8,14 @@ from app import create_app
 
 
 class TestMachines(unittest.TestCase):
-    base_url = "http://127.0.0.1:6969"  # TODO: hardcode
-    machine_api = f"{base_url}/machines"
-
     def test_create_machine(self):
         mock_name = lorem.sentence()
         mock_location = lorem.sentence()
         flask_app = create_app()
         with flask_app.test_client() as test_client:
-            response = test_client.post('/machines', json={"name": mock_name, "location": mock_location})
+            response = test_client.post(
+                "/machines", json={"name": mock_name, "location": mock_location}
+            )
             response_json = response.get_json()
             assert response.status_code == 200
             assert response_json["name"] == mock_name
@@ -54,13 +53,43 @@ class TestMachines(unittest.TestCase):
         random_item_amount = randrange(10)
         flask_app = create_app()
         with flask_app.test_client() as test_client:
-            response = test_client.put(f"/machines/{random_machine_id}", json={item_name: random_item_amount})
-            response_json = response.get_json()
-            print(response_json)
-            assert response.status_code == 200
-            assert item_name in response_json["stock"]
-            assert response_json["stock"][item_name] >= random_item_amount
 
+            get_current_stock_response = test_client.get(f"/machines/{random_machine_id}")
+            get_current_stock_response_json = get_current_stock_response.get_json()
+            current_amount_stock = get_current_stock_response_json["stock"].get(item_name, 0)
+
+            update_stock_response = test_client.put(
+                f"/machines/{random_machine_id}", json={item_name: random_item_amount}
+            )
+            update_stock_response_json = update_stock_response.get_json()
+            assert update_stock_response.status_code == 200
+            assert item_name in update_stock_response_json["stock"]
+            assert update_stock_response_json["stock"][item_name] == current_amount_stock + random_item_amount
+
+    def test_delete_stock(self):
+        # random_machine_id = randrange(10)
+        random_machine_id = 2
+        item_name = lorem.sentence()
+        random_item_amount = randrange(10)
+        flask_app = create_app()
+        with flask_app.test_client() as test_client:
+            get_current_stock_response = test_client.get(f"/machines/{random_machine_id}")
+            get_current_stock_response_json = get_current_stock_response.get_json()
+            current_amount_stock = get_current_stock_response_json["stock"].get(item_name, 0)
+
+            if current_amount_stock == 0:
+                update_stock_response = test_client.put(
+                    f"/machines/{random_machine_id}", json={item_name: random_item_amount + 10}
+                )
+                current_amount_stock = random_item_amount + 10
+
+            remove_stock_response = test_client.post(
+                f"/machines/{random_machine_id}", json={item_name: random_item_amount}
+            )
+            remove_stock_response_json = remove_stock_response.get_json()
+            assert remove_stock_response.status_code == 200
+            assert item_name in remove_stock_response_json["stock"]
+            assert remove_stock_response_json["stock"][item_name] == current_amount_stock - random_item_amount
 
 if __name__ == "__main__":
     unittest.main()
