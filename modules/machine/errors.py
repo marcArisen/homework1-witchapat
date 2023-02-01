@@ -1,4 +1,5 @@
 from flask import jsonify
+
 from modules.machine import machine_blueprint
 from modules.machine.exception import StocksCaculateError
 

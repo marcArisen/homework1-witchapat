@@ -1,8 +1,8 @@
 from flask import jsonify, request
 
+from modules.database.sqlite_service import *
 from modules.machine import machine_blueprint
 from modules.machine.exception import StocksCaculateError
-from modules.database.sqlite_service import *
 from modules.machine.machine import Machine
 
 

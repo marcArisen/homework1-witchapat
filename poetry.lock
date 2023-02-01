@@ -20,17 +20,6 @@ tests = ["attrs[tests-no-zope]", "zope.interface"]
 tests-no-zope = ["cloudpickle", "cloudpickle", "hypothesis", "hypothesis", "mypy (>=0.971,<0.990)", "mypy (>=0.971,<0.990)", "pympler", "pympler", "pytest (>=4.3.0)", "pytest (>=4.3.0)", "pytest-mypy-plugins", "pytest-mypy-plugins", "pytest-xdist[psutil]", "pytest-xdist[psutil]"]
 
 [[package]]
-name = "caipyrinha"
-version = "0.2.2"
-description = "Abstraction layer over argparse."
-category = "main"
-optional = false
-python-versions = "*"
-files = [
-    {file = "caipyrinha-0.2.2.tar.gz", hash = "sha256:ad311aea0f953719882ca42a86aa65d37ddbd6418daa21188435837fef079e04"},
-]
-
-[[package]]
 name = "certifi"
 version = "2022.12.7"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -389,6 +378,24 @@ files = [
 ]
 
 [[package]]
+name = "isort"
+version = "5.12.0"
+description = "A Python utility / library to sort Python imports."
+category = "main"
+optional = false
+python-versions = ">=3.8.0"
+files = [
+    {file = "isort-5.12.0-py3-none-any.whl", hash = "sha256:f84c2818376e66cf843d497486ea8fed8700b340f308f076c6fb1229dff318b6"},
+    {file = "isort-5.12.0.tar.gz", hash = "sha256:8bef7dde241278824a6d83f44a544709b065191b95b6e50894bdc722fcba0504"},
+]
+
+[package.extras]
+colors = ["colorama (>=0.4.3)"]
+pipfile-deprecated-finder = ["pip-shims (>=0.5.2)", "pipreqs", "requirementslib"]
+plugins = ["setuptools"]
+requirements-deprecated-finder = ["pip-api", "pipreqs"]
+
+[[package]]
 name = "itsdangerous"
 version = "2.1.2"
 description = "Safely pass data to untrusted environments and back."
@@ -501,20 +508,6 @@ files = [
     {file = "mccabe-0.7.0-py2.py3-none-any.whl", hash = "sha256:6c2d30ab6be0e4a46919781807b4f0d834ebdd6c6e3dca0bda5a15f863427b6e"},
     {file = "mccabe-0.7.0.tar.gz", hash = "sha256:348e0240c33b60bbdf4e523192ef919f28cb2c3d7d5c7794f74009290f236325"},
 ]
-
-[[package]]
-name = "my-project"
-version = "0.2dev"
-description = "Esta es la descripcion breve"
-category = "main"
-optional = false
-python-versions = "*"
-files = [
-    {file = "my_project-0.2dev.tar.gz", hash = "sha256:e529f94b6551228f63390dcbd29fdace912ed555fb7a9dc33f843f5407ecf1c7"},
-]
-
-[package.dependencies]
-caipyrinha = "*"
 
 [[package]]
 name = "nodeenv"
@@ -837,4 +830,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "ee9dcd97045823254620d1b811c5b1a50baaaf076cb993d820c6be66b9b3773d"
+content-hash = "2f6ff405078d79f28f505cab3afc732adc81b5afbff903ae3f024491c426e2d5"
