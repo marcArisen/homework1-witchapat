@@ -28,7 +28,6 @@ class TestMachines(unittest.TestCase):
 
     def test_get_machine_by_id(self):
         """A method to test an API that gets a machine by its id."""
-        # random_machine_id = randrange(10)
         random_machine_id = 3
         flask_app = create_app()
         with flask_app.test_client() as test_client:
@@ -53,7 +52,6 @@ class TestMachines(unittest.TestCase):
 
     def test_update_stock(self):
         """A method to test an API that update the stock of a machine."""
-        # random_machine_id = randrange(10)
         random_machine_id = 2
         item_name = lorem.sentence()
         random_item_amount = randrange(10)
@@ -81,7 +79,6 @@ class TestMachines(unittest.TestCase):
 
     def test_delete_stock(self):
         """A method to test an API that removes a stock from a machine."""
-        # random_machine_id = randrange(10)
         random_machine_id = 2
         item_name = lorem.sentence()
         random_item_amount = randrange(10)

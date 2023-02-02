@@ -70,4 +70,4 @@ def delete_stock_by_json(uuid: int) -> Response:
 def delete_machine_by_id(uuid: int) -> Response:
     """Delete machine API by passing id parameter."""
     db.delete_machine_by_id(uuid)
-    return "machine removed......", 200
+    return jsonify("machine removed......")

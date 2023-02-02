@@ -69,7 +69,7 @@ class DatabaseService:
         cursor_obj.execute("DELETE FROM machines WHERE id = ?", (machine_id,))
         self.con.commit()
 
-    def get_machine_by_id(self, machine_id: int) -> Machine:
+    def get_machine_by_id(self, machine_id: int) -> dict:
         """Get a machine by its id."""
         cursor_obj = self.con.cursor()
         cursor_obj.execute("SELECT * FROM machines where id = ?", (machine_id,))
