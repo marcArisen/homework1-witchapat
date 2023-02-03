@@ -1,7 +1,5 @@
+import secrets
 import unittest
-from random import randrange
-
-import lorem
 
 from app import create_app
 
@@ -13,8 +11,8 @@ class TestMachines(unittest.TestCase):
 
     def test_create_machine(self):
         """A method to test create machine API."""
-        mock_name = lorem.sentence()
-        mock_location = lorem.sentence()
+        mock_name = secrets.token_hex(10)
+        mock_location = secrets.token_hex(10)
         flask_app = create_app()
         with flask_app.test_client() as test_client:
             response = test_client.post(
@@ -28,7 +26,7 @@ class TestMachines(unittest.TestCase):
 
     def test_get_machine_by_id(self):
         """A method to test an API that gets a machine by its id."""
-        random_machine_id = 3
+        random_machine_id = secrets.randbelow(10)
         flask_app = create_app()
         with flask_app.test_client() as test_client:
             response = test_client.get(f"{self.machine_path}/{random_machine_id}")
@@ -52,9 +50,9 @@ class TestMachines(unittest.TestCase):
 
     def test_update_stock(self):
         """A method to test an API that update the stock of a machine."""
-        random_machine_id = 2
-        item_name = lorem.sentence()
-        random_item_amount = randrange(10)
+        random_machine_id = 11
+        item_name = secrets.token_hex(10)
+        random_item_amount = secrets.randbelow(10)
         flask_app = create_app()
         with flask_app.test_client() as test_client:
             get_current_stock_response = test_client.get(
@@ -79,9 +77,9 @@ class TestMachines(unittest.TestCase):
 
     def test_delete_stock(self):
         """A method to test an API that removes a stock from a machine."""
-        random_machine_id = 2
-        item_name = lorem.sentence()
-        random_item_amount = randrange(10)
+        random_machine_id = 11
+        item_name = secrets.token_hex(10)
+        random_item_amount = secrets.randbelow(10)
         flask_app = create_app()
         with flask_app.test_client() as test_client:
             get_current_stock_response = test_client.get(
@@ -113,8 +111,8 @@ class TestMachines(unittest.TestCase):
 
     def test_remove_machine(self):
         """A method to test an API that removes the machine from the database by its id."""
-        mock_name = lorem.sentence()
-        mock_location = lorem.sentence()
+        mock_name = secrets.token_hex(10)
+        mock_location = secrets.token_hex(10)
         flask_app = create_app()
         with flask_app.test_client() as test_client:
             create_response = test_client.post(
