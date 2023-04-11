@@ -92,10 +92,13 @@ class DatabaseService:
         machine["stock"] = json.loads(instance_from_database["stock"])
         return machine
 
-    def insert_stock_history(self, machine_id: int, product_name: str, quantity: int) -> int:
+    def insert_stock_history(
+        self, machine_id: int, product_name: str, quantity: int
+    ) -> int:
         """Insert stock history data."""
         cursor_obj = self.con.cursor()
-        cursor_obj.execute("INSERT INTO stock_history (machine_id, timestamp, product_name, quantity) VALUES(?, datetime('now'), ?, ?)",
+        cursor_obj.execute(
+            "INSERT INTO stock_history (machine_id, timestamp, product_name, quantity) VALUES(?, datetime('now'), ?, ?)",
             (machine_id, product_name, quantity),
         )
         self.con.commit()
@@ -105,7 +108,8 @@ class DatabaseService:
         """Get stock history by product_name."""
         cursor_obj = self.con.cursor()
         cursor_obj.execute(
-            "SELECT * FROM stock_history WHERE product_name = ? ORDER BY timestamp ASC", (product_name,)
+            "SELECT * FROM stock_history WHERE product_name = ? ORDER BY timestamp ASC",
+            (product_name,),
         )
         rows = cursor_obj.fetchall()
         return [dict(row) for row in rows]
@@ -132,4 +136,3 @@ class DatabaseService:
 
 
 db = DatabaseService()
-

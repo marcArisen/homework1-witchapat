@@ -1,15 +1,17 @@
 import json
 from unittest import TestCase
+
 from app import create_app
 from modules.database.sqlite_service import DatabaseService
 from modules.machine.machine import Machine
+
 
 class TestMachines(TestCase):
     def setUp(self):
         self.app = create_app()
         self.db = DatabaseService()
         self.client = self.app.test_client()
-        
+
     def test_create_machine(self):
         response = self.client.post(
             "/machines",
@@ -40,7 +42,9 @@ class TestMachines(TestCase):
         self.assertEqual(machine_data["location"], "Test Location")
 
     def test_add_stock_by_json(self):
-        machine = Machine(name="Test Machine", location="Test Location", stocks={"pringles": 10})
+        machine = Machine(
+            name="Test Machine", location="Test Location", stocks={"pringles": 10}
+        )
         inserted_id = self.db.insert_into_machine(machine)
         response = self.client.put(
             f"/machines/{inserted_id}",
@@ -51,7 +55,11 @@ class TestMachines(TestCase):
         machine_data = response.get_json()
 
     def test_delete_stock_by_json(self):
-        machine = Machine(name="Test Machine", location="Test Location", stocks={"pringles": 10, "doritos": 5})
+        machine = Machine(
+            name="Test Machine",
+            location="Test Location",
+            stocks={"pringles": 10, "doritos": 5},
+        )
         inserted_id = self.db.insert_into_machine(machine)
         response = self.client.post(
             f"/machines/{inserted_id}",
@@ -60,7 +68,6 @@ class TestMachines(TestCase):
         )
         self.assertEqual(response.status_code, 500)
         # machine_data = response.get_json()
-
 
     def test_delete_machine_by_id(self):
         machine = Machine(name="Test Machine", location="Test Location")
@@ -71,7 +78,9 @@ class TestMachines(TestCase):
         self.assertEqual(response.status_code, 500)
 
     def test_get_stock_history_by_product_name(self):
-        machine = Machine(name="Test Machine", location="Test Location", stocks={"pringles": 10})
+        machine = Machine(
+            name="Test Machine", location="Test Location", stocks={"pringles": 10}
+        )
         inserted_id = self.db.insert_into_machine(machine)
 
         response = self.client.put(
@@ -88,7 +97,9 @@ class TestMachines(TestCase):
         self.assertTrue(len(stock_history_data) > 0)
 
     def test_get_stock_history_by_machine_id(self):
-        machine = Machine(name="Test Machine", location="Test Location", stocks={"pringles": 10})
+        machine = Machine(
+            name="Test Machine", location="Test Location", stocks={"pringles": 10}
+        )
         inserted_id = self.db.insert_into_machine(machine)
 
         response = self.client.put(
