@@ -54,6 +54,7 @@ def delete_stock_by_json(uuid: int) -> Response:
     to_update = {}
 
     for item in to_remove:
+        amount_to_remove = to_remove
         amount_to_remove = to_remove[item]
         if item in stock and amount_to_remove <= stock[item]:
             leftover_amount = stock[item] - amount_to_remove
@@ -71,3 +72,15 @@ def delete_machine_by_id(uuid: int) -> Response:
     """Delete machine API by passing id parameter."""
     db.delete_machine_by_id(uuid)
     return jsonify("machine removed......")
+
+
+@machine_blueprint.route("/stock_history/product/<product_name>", methods=["GET"])
+def get_stock_history_by_product_name(product_name: str) -> Response:
+    """Get stock history by product name."""
+    return jsonify(db.get_stock_history_by_product_name(product_name))
+
+
+@machine_blueprint.route("/stock_history/machine/<uuid>", methods=["GET"])
+def get_stock_history_by_machine_id(uuid: int) -> Response:
+    """Get stock history by machine id."""
+    return jsonify(db.get_stock_history_by_machine_id_grouped_by_timestamp(uuid))
