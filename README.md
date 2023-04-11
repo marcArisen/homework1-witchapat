@@ -45,3 +45,5 @@ for add product and buy product from the stock api, the request needs a body lik
 
 
 ``url/stock_history/product/:itemName`` `Get Method`: list all transaction history happened about that particular item
+
+.
